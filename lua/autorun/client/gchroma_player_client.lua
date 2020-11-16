@@ -21,6 +21,7 @@ local function GChromaPlayerInit()
 		require( "gchroma" )
 		local ply = LocalPlayer()
 		local chroma = GChroma_Start()
+		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		GChroma_ResetDevice( chroma, GCHROMA_DEVICE_ALL )
 
 		local keys = {
@@ -33,7 +34,7 @@ local function GChromaPlayerInit()
 		}
 
 		for k,v in pairs( keys ) do
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, v, 0 )
+			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, v, 0 )
 		end
 		
 		timer.Simple( 0.1, function()
@@ -41,7 +42,7 @@ local function GChromaPlayerInit()
 				if v[2] == -1 then
 					GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, Vector( 145, 80, 0 ), _G["GCHROMA_KEY_"..v[1] + 1], 0 )
 				else
-					GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, _G["GCHROMA_KEY_"..v[1] + 1], 0 )
+					GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, _G["GCHROMA_KEY_"..v[1] + 1], 0 )
 				end
 			end
 			GChroma_CreateEffect( chroma, false, true )
@@ -53,13 +54,12 @@ net.Receive( "GChromaPlayerInit", GChromaPlayerInit )
 local function GChromaOpenChat( teamchat )
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
-		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local normalchat = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode" ) ) )
 		local chatteam = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode2" ) ) )
 		if teamchat then
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, chatteam, 0 )
+			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, chatteam, 0 )
 		else
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, normalchat, 0 )
+			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, normalchat, 0 )
 		end
 		GChroma_CreateEffect( chroma, false, true )
 	end
@@ -69,10 +69,11 @@ hook.Add( "StartChat", "GChromaOpenChat", GChromaOpenChat )
 local function GChromaCloseChat()
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
+		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local normalchat = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode" ) ) )
 		local teamchat = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode2" ) ) )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, normalchat, 0 )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, teamchat, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, normalchat, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, teamchat, 0 )
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
@@ -84,10 +85,10 @@ local function GChromaNoclip()
 		local enable = net.ReadBool()
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "noclip" ) ) )
 		if enable then
+			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
+		else
 			local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
-		else
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
 		end
 		GChroma_CreateEffect( chroma, false, true )
 	end
@@ -97,9 +98,8 @@ net.Receive( "GChromaNoclip", GChromaNoclip )
 local function GChromaOpenSpawnMenu()
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
-		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu" ) ) )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
@@ -108,8 +108,9 @@ hook.Add( "OnSpawnMenuOpen", "GChromaOpenSpawnMenu", GChromaOpenSpawnMenu )
 local function GChromaCloseSpawnMenu()
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
+		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu" ) ) )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
@@ -118,9 +119,8 @@ hook.Add( "OnSpawnMenuClose", "GChromaCloseSpawnMenu", GChromaCloseSpawnMenu )
 local function GChromaOpenContextMenu()
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
-		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu_context" ) ) )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
@@ -129,8 +129,9 @@ hook.Add( "OnContextMenuOpen", "GChromaOpenContextMenu", GChromaOpenContextMenu 
 local function GChromaCloseContextMenu()
 	if GChroma_Loaded then
 		local chroma = GChroma_Start()
+		local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu_context" ) ) )
-		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
+		GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
@@ -142,12 +143,21 @@ local function GChromaFlashlight()
 		local enabled = net.ReadBool()
 		local convert = GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "impulse 100" ) ) )
 		if enabled then
+			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
+		else
 			local plycolor = GChroma_ToVector( LocalPlayer():GetPlayerColor():ToColor() )
 			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, convert, 0 )
-		else
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, GCHROMA_COLOR_WHITE, convert, 0 )
 		end
 		GChroma_CreateEffect( chroma, false, true )
 	end
 end
 net.Receive( "GChromaFlashlight", GChromaFlashlight )
+
+if DarkRP then
+	local function GChromaDarkRPChangedTeam( ply )
+		if GChroma_Loaded then
+			GChromaPlayerInit()
+		end
+	end
+	hook.Add( "OnPlayerChangedTeam", "GChromaDarkRPChangedTeam", GChromaDarkRPChangedTeam )
+end
