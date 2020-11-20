@@ -11,6 +11,7 @@ hook.Add( "PlayerSpawn", "GChromaPlayerSpawn", GChromaPlayerSpawn )
 
 local function GChromaPlayerDeath( ply )
 	if GChroma_Loaded then
+		GChroma_ResetDevice( ply, GCHROMA_DEVICE_ALL )
 		GChroma_SetDeviceColor( ply, GCHROMA_DEVICE_ALL, GCHROMA_COLOR_RED )
 	end
 end
