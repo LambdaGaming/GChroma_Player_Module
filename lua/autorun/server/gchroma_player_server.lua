@@ -9,6 +9,24 @@ local function GChromaPlayerSpawn( ply )
 end
 hook.Add( "PlayerSpawn", "GChromaPlayerSpawn", GChromaPlayerSpawn )
 
+local function GChromaPlayerInitSpawn( ply )
+	hook.Add( "SetupMove", ply, function( self, ply, _, cmd )
+		if self == ply and !cmd:IsForced() then
+			hook.Run( "PlayerFullLoad", self )
+			hook.Remove( "SetupMove", self )
+		end
+	end )
+end
+hook.Add( "PlayerInitialSpawn", "GChromaPlayerInitSpawn", GChromaPlayerInitSpawn )
+
+local function GChromaFullyLoaded( ply )
+	if GChroma_Loaded then
+		net.Start( "GChromaPlayerInit" )
+		net.Send( ply )
+	end
+end
+hook.Add( "PlayerFullLoad", "GChromaFullyLoaded", GChromaFullyLoaded )
+
 local function GChromaPlayerDeath( ply )
 	if GChroma_Loaded then
 		GChroma_ResetDevice( ply, GCHROMA_DEVICE_ALL )
