@@ -181,6 +181,23 @@ local function GChromaEndVoice()
 end
 hook.Add( "PlayerEndVoice", "GChromaEndVoice", GChromaEndVoice )
 
+local function GChromaUpdateSlots()
+	local ply = LocalPlayer()
+	if GChroma_Loaded and IsValid( ply ) then
+		local chroma = GChroma_Start()
+		local plycolor = GChroma_ToVector( ply:GetPlayerColor():ToColor() )
+		for k,v in pairs( GetEmptySlots( ply ) ) do
+			if v[2] == -1 then
+				GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, Vector( 145, 80, 0 ), _G["GCHROMA_KEY_"..v[1] + 1], 0 )
+			else
+				GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, _G["GCHROMA_KEY_"..v[1] + 1], 0 )
+			end
+		end
+		GChroma_CreateEffect( chroma )
+	end
+end
+net.Receive( "GChromaUpdateSlots", GChromaUpdateSlots )
+
 if DarkRP then
 	local function GChromaDarkRPChangedTeam( ply )
 		if GChroma_Loaded then
