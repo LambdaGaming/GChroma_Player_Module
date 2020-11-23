@@ -1,2 +1,18 @@
-# GChroma_Player_Module
- Module for GChroma that highlights common sandbox and DarkRP key binds.
+# GChroma Player Module
+ Module for GChroma that highlights and reacts to common sandbox key binds. The workshop version can be found [here.]()
+
+# Requirements
+ For this addon to work, you need to download the [GChroma Base]() and [GChroma binary module.]()
+
+# Features
+ - Changes keys based on what sandbox commands they are bound to. (Requires respawn to take effect.)
+ - Changes key colors based on the players current color. (Requires respawn to take effect.)
+ - All devices will turn red when the player dies, and will remain red until the player respawns.
+ - Currently supported binds:
+   - Weapon slot number keys. If a slot is empty, that slots number will turn orange on the keyboard.
+   - Noclip. Bound key turns white when noclip is enabled.
+   - Normal and team chats. Bound keys turn white when the respective chat box is open.
+   - Spawn menu. Bound key turns white when the spawn menu is open. Pressing F1 to toggle the spawn menu will highlight the key bound to normally opening it.
+   - Context menu. Bound key turns white when the context menu is open.
+   - Flashlight. Bound key turns white when the flashlight is enabled.
+   - Voice chat. Bound key turns white when voice chat is active.
