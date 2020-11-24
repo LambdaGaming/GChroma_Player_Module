@@ -1,8 +1,8 @@
 # GChroma Player Module
- Module for GChroma that highlights and reacts to common sandbox key binds. The workshop version can be found [here.]()
+ Module for GChroma that highlights and reacts to common sandbox key binds. The workshop version can be found [here.](https://steamcommunity.com/sharedfiles/filedetails/?id=2297434661)
 
 # Requirements
- For this addon to work, you need to download the [GChroma Base]() and [GChroma binary module.]()
+ For this addon to work, you need to download the [GChroma Base](https://steamcommunity.com/sharedfiles/filedetails/?id=2297412726) and [GChroma binary module.](https://github.com/LambdaGaming/GChroma/releases)
 
 # Features
  - Changes keys based on what sandbox commands they are bound to. (Requires respawn to take effect.)
