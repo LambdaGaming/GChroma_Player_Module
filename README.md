@@ -16,3 +16,6 @@
    - Context menu. Bound key turns white when the context menu is open.
    - Flashlight. Bound key turns white when the flashlight is enabled.
    - Voice chat. Bound key turns white when voice chat is active.
+
+# Issues & Pull Requests
+ If you would like to contribute to this repository by creating an issue or pull request, please refer to the [contributing guidelines.](https://lambdagaming.github.io/contributing.html)
