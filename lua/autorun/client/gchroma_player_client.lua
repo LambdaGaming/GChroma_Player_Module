@@ -34,6 +34,8 @@ local function GChromaPlayerInit()
 			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "voicerecord" ) ) )
 		}
 
+		GChroma_SetDeviceColor( chroma, GCHROMA_DEVICE_ALL, Vector( 25, 25, 25 ) )
+
 		for k,v in pairs( keys ) do
 			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, v, 0 )
 		end
