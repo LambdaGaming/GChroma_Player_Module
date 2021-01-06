@@ -29,8 +29,11 @@ hook.Add( "PlayerFullLoad", "GChromaFullyLoaded", GChromaFullyLoaded )
 
 local function GChromaPlayerDeath( ply )
 	if GChroma_Loaded then
-		GChroma_ResetDevice( ply, GCHROMA_DEVICE_ALL )
-		GChroma_SetDeviceColor( ply, GCHROMA_DEVICE_ALL, GCHROMA_COLOR_RED )
+		local tbl = {
+			GChroma_ResetDevice( GCHROMA_DEVICE_ALL ),
+			GChroma_SetDeviceColor( GCHROMA_DEVICE_ALL, GCHROMA_COLOR_RED )
+		}
+		GChroma_SendFunctions( ply, tbl )
 	end
 end
 hook.Add( "PostPlayerDeath", "GChromaPlayerDeath", GChromaPlayerDeath )
