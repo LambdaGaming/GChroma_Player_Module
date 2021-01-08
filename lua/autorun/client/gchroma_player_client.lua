@@ -18,38 +18,42 @@ end
 
 local function GChromaPlayerInit()
 	local ply = LocalPlayer()
-	if GChroma_Loaded and IsValid( ply ) then
-		require( "gchroma" )
-		local chroma = GChroma_Start()
-		local plycolor = GChroma_ToVector( ply:GetPlayerColor():ToColor() )
-		GChroma_ResetDevice( chroma, GCHROMA_DEVICE_ALL )
+	if GChroma_Loaded then
+		if IsValid( ply ) then
+			require( "gchroma" )
+			local chroma = GChroma_Start()
+			local plycolor = GChroma_ToVector( ply:GetPlayerColor():ToColor() )
+			GChroma_ResetDevice( chroma, GCHROMA_DEVICE_ALL )
 
-		local keys = {
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "noclip" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode2" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu_context" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "impulse 100" ) ) ),
-			GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "voicerecord" ) ) )
-		}
+			local keys = {
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "noclip" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "messagemode2" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "menu_context" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "impulse 100" ) ) ),
+				GChroma_KeyConvert( input.GetKeyCode( input.LookupBinding( "voicerecord" ) ) )
+			}
 
-		GChroma_SetDeviceColor( chroma, GCHROMA_DEVICE_ALL, Vector( 25, 25, 25 ) )
+			GChroma_SetDeviceColor( chroma, GCHROMA_DEVICE_ALL, Vector( 25, 25, 25 ) )
 
-		for k,v in pairs( keys ) do
-			GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, v, 0 )
-		end
-		
-		timer.Simple( 0.1, function()
-			for k,v in pairs( GetEmptySlots( ply ) ) do
-				if v[2] == -1 then
-					GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, Vector( 145, 80, 0 ), _G["GCHROMA_KEY_"..v[1] + 1], 0 )
-				else
-					GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, _G["GCHROMA_KEY_"..v[1] + 1], 0 )
-				end
+			for k,v in pairs( keys ) do
+				GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, v, 0 )
 			end
-			GChroma_CreateEffect( chroma )
-		end )
+			
+			timer.Simple( 0.1, function()
+				for k,v in pairs( GetEmptySlots( ply ) ) do
+					if v[2] == -1 then
+						GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, Vector( 145, 80, 0 ), _G["GCHROMA_KEY_"..v[1] + 1], 0 )
+					else
+						GChroma_SetDeviceColorEx( chroma, GCHROMA_DEVICE_KEYBOARD, plycolor, _G["GCHROMA_KEY_"..v[1] + 1], 0 )
+					end
+				end
+				GChroma_CreateEffect( chroma )
+			end )
+		end
+	else
+		chat.AddText( Color( 0, 255, 0 ), "WARNING! GChroma is not loaded! Please follow the install instructions: https://steamcommunity.com/sharedfiles/filedetails/?id=2297412726" )
 	end
 end
 net.Receive( "GChromaPlayerInit", GChromaPlayerInit )
