@@ -4,6 +4,7 @@ util.AddNetworkString( "GChromaPlayerInit" )
 local function GChromaPlayerSpawn( ply )
 	if GChroma_Loaded then
 		net.Start( "GChromaPlayerInit" )
+		net.WriteBool( false )
 		net.Send( ply )
 	end
 end
@@ -22,6 +23,7 @@ hook.Add( "PlayerInitialSpawn", "GChromaPlayerInitSpawn", GChromaPlayerInitSpawn
 local function GChromaFullyLoaded( ply )
 	if GChroma_Loaded then
 		net.Start( "GChromaPlayerInit" )
+		net.WriteBool( true )
 		net.Send( ply )
 	end
 end

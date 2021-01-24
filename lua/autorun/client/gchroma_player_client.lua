@@ -18,6 +18,7 @@ end
 
 local function GChromaPlayerInit()
 	local ply = LocalPlayer()
+	local initial = net.ReadBool()
 	if GChroma_Loaded then
 		if IsValid( ply ) then
 			require( "gchroma" )
@@ -52,7 +53,8 @@ local function GChromaPlayerInit()
 				GChroma_CreateEffect( chroma )
 			end )
 		end
-	else
+	end
+	if !GChroma_Loaded and initial then
 		chat.AddText( Color( 0, 255, 0 ), "WARNING! GChroma is not loaded! Please follow the install instructions: https://steamcommunity.com/sharedfiles/filedetails/?id=2297412726" )
 	end
 end
