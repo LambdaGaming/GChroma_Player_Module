@@ -1,5 +1,4 @@
-gchroma = gchroma or {}
-gchroma.PlayerModuleLoaded = true
+GChroma_PlayerModuleLoaded = true
 
 util.AddNetworkString( "GChromaPlayerInit" )
 local function GChromaPlayerSpawn( ply )
