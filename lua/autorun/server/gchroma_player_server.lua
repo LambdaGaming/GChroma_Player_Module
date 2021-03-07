@@ -2,7 +2,7 @@ GChroma_PlayerModuleLoaded = true
 
 util.AddNetworkString( "GChromaPlayerInit" )
 local function GChromaPlayerSpawn( ply )
-	if gchroma.Loaded then
+	if gchroma then
 		net.Start( "GChromaPlayerInit" )
 		net.WriteBool( false )
 		net.Send( ply )
@@ -21,7 +21,7 @@ end
 hook.Add( "PlayerInitialSpawn", "GChromaPlayerInitSpawn", GChromaPlayerInitSpawn )
 
 local function GChromaFullyLoaded( ply )
-	if gchroma.Loaded then
+	if gchroma then
 		net.Start( "GChromaPlayerInit" )
 		net.WriteBool( true )
 		net.Send( ply )
@@ -30,7 +30,7 @@ end
 hook.Add( "PlayerFullLoad", "GChromaFullyLoaded", GChromaFullyLoaded )
 
 local function GChromaPlayerDeath( ply )
-	if gchroma.Loaded then
+	if gchroma then
 		local tbl = {
 			gchroma.ResetDevice( GCHROMA_DEVICE_ALL ),
 			gchroma.SetDeviceColor( GCHROMA_DEVICE_ALL, GCHROMA_COLOR_RED )
@@ -42,7 +42,7 @@ hook.Add( "PostPlayerDeath", "GChromaPlayerDeath", GChromaPlayerDeath )
 
 util.AddNetworkString( "GChromaNoclip" )
 local function GChromaPlayerNoclip( ply, enable )
-	if gchroma.Loaded and IsFirstTimePredicted() then --This hook is predicted so it needs to be run server-side in order to work in singleplayer
+	if gchroma and IsFirstTimePredicted() then --This hook is predicted so it needs to be run server-side in order to work in singleplayer
 		net.Start( "GChromaNoclip" )
 		net.WriteBool( enable )
 		net.Send( ply )
@@ -52,7 +52,7 @@ hook.Add( "PlayerNoClip", "GChromaPlayerNoclip", GChromaPlayerNoclip )
 
 util.AddNetworkString( "GChromaFlashlight" )
 local function GChromaFlashlight( ply, enabled )
-	if gchroma.Loaded then
+	if gchroma then
 		net.Start( "GChromaFlashlight" )
 		net.WriteBool( enabled )
 		net.Send( ply )
@@ -62,7 +62,7 @@ hook.Add( "PlayerSwitchFlashlight", "GChromaFlashlight", GChromaFlashlight )
 
 util.AddNetworkString( "GChromaUpdateSlots" )
 local function GChromaPickupWeapon( weapon, ply )
-	if gchroma.Loaded then
+	if gchroma then
 		timer.Simple( 0.1, function()
 			net.Start( "GChromaUpdateSlots" )
 			net.Send( ply )
@@ -72,7 +72,7 @@ end
 hook.Add( "WeaponEquip", "GChromaPickupWeapon", GChromaPickupWeapon )
 
 local function GChromaDropWeapon( ply, weapon )
-	if gchroma.Loaded then
+	if gchroma then
 		timer.Simple( 0.1, function()
 			net.Start( "GChromaUpdateSlots" )
 			net.Send( ply )
