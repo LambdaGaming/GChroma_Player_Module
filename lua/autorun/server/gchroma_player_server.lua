@@ -62,7 +62,7 @@ hook.Add( "PlayerSwitchFlashlight", "GChromaFlashlight", GChromaFlashlight )
 
 util.AddNetworkString( "GChromaUpdateSlots" )
 local function GChromaPickupWeapon( weapon, ply )
-	if gchroma then
+	if gchroma and ply:IsPlayer() then
 		timer.Simple( 0.1, function()
 			net.Start( "GChromaUpdateSlots" )
 			net.Send( ply )
@@ -72,7 +72,7 @@ end
 hook.Add( "WeaponEquip", "GChromaPickupWeapon", GChromaPickupWeapon )
 
 local function GChromaDropWeapon( ply, weapon )
-	if gchroma then
+	if gchroma and ply:IsPlayer() then
 		timer.Simple( 0.1, function()
 			net.Start( "GChromaUpdateSlots" )
 			net.Send( ply )
